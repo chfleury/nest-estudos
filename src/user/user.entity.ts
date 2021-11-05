@@ -8,9 +8,9 @@ export class User {
   @Field(() => ID)
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   password: string;
 }
