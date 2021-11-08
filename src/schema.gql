@@ -50,6 +50,11 @@ type User {
   updatedAt: DateTime!
 }
 
+type AuthType {
+  user: User!
+  token: String!
+}
+
 type Query {
   users: [User!]!
   user(id: Float!): User!
@@ -71,6 +76,7 @@ type Mutation {
   deleteGame(id: Float!): Boolean!
   createBet(data: CreateBetInput!): Bet!
   deleteBet(id: Float!): Bet!
+  login(data: AuthInputDTO!): AuthType!
 }
 
 input CreateUserInput {
@@ -101,4 +107,9 @@ input CreateBetInput {
   gameId: Float!
   userId: Float!
   totalPrice: Float!
+}
+
+input AuthInputDTO {
+  email: String!
+  password: String!
 }
