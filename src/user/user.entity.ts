@@ -16,5 +16,8 @@ export class User {
   password: string;
 
   @ManyToOne(() => Profile)
-  profileId: Profile;
+  profile: Profile;
+
+  @Column({})
+  profileId: number;
 }
