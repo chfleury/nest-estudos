@@ -15,6 +15,22 @@ export class ProfileService {
     private profileRepository: Repository<Profile>,
   ) {}
 
+  async findProfileById(id: number): Promise<Profile> {
+    const profile = await this.profileRepository.findOne(id);
+
+    if (!profile) {
+      throw new NotFoundException('Profile not found');
+    }
+
+    return profile;
+  }
+
+  async findAllProfiles(): Promise<Profile[]> {
+    const profiles = await this.profileRepository.find();
+
+    return profiles;
+  }
+
   async createProfile(data: CreateProfileInput): Promise<Profile> {
     const profile = this.profileRepository.create(data);
     const savedProfile = await this.profileRepository.save(profile);

@@ -12,6 +12,6 @@ export class Profile {
   @Column({ unique: true })
   profile: string;
 
-  @OneToMany(() => User, (user) => user.profile)
+  @OneToMany(() => User, (user) => user.profileId)
   users: User[];
 }
