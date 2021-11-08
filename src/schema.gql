@@ -8,12 +8,15 @@ type Profile {
   users: [User!]!
 }
 
-type User {
+type Game {
   id: ID!
-  email: String!
-  password: String!
-  profile: Profile!
-  profileId: Float!
+  type: String!
+  description: String!
+  range: Float!
+  price: Float!
+  maxNumber: Float!
+  color: String!
+  users: [Bet!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -23,14 +26,26 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Game {
+type Bet {
   id: ID!
-  type: String!
-  description: String!
-  range: Float!
-  price: Float!
-  maxNumber: Float!
-  color: String!
+  game: Game!
+  user: User!
+  gameId: Float!
+  userId: Float!
+  selectedNumbers: String!
+  totalPrice: Float!
+  isDeleted: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  profile: Profile!
+  profileId: Float!
+  users: [Bet!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -42,6 +57,8 @@ type Query {
   profile(id: Float!): Profile!
   games: [Game!]!
   game(id: Float!): Game!
+  bets: [Bet!]!
+  bet(id: Float!): Bet!
 }
 
 type Mutation {
@@ -52,6 +69,8 @@ type Mutation {
   deleteProfile(id: Float!): Boolean!
   createGame(data: CreateGameInput!): Game!
   deleteGame(id: Float!): Boolean!
+  createBet(data: CreateBetInput!): Bet!
+  deleteBet(id: Float!): Bet!
 }
 
 input CreateUserInput {
@@ -76,4 +95,11 @@ input CreateGameInput {
   price: Float!
   maxNumber: Float!
   color: String!
+}
+
+input CreateBetInput {
+  selectedNumbers: String!
+  gameId: Float!
+  userId: Float!
+  totalPrice: Float!
 }

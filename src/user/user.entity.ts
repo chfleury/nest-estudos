@@ -1,10 +1,12 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Bet } from 'src/bet/bet.entity';
 import { Profile } from 'src/profile/profile.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,6 +30,9 @@ export class User {
   @Column({})
   profileId: number;
 
+  @OneToMany(() => Bet, (bet) => bet.userId)
+  users: Bet[];
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
@@ -40,4 +45,10 @@ export class User {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updatedAt: Date;
+
+  // @AfterInsert()
+  // async createSocketRoom(): Promise<void> {
+  //   const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  //   this.room =  `${this.id}_${randomString}`
+  // }
 }

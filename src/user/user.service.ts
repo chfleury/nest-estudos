@@ -58,7 +58,7 @@ export class UserService {
     const user = await this.userRepository.findOne(id);
 
     if (!user) {
-      throw new NotFoundException('Profile not found');
+      throw new NotFoundException('User not found');
     }
 
     const deletedUser = await this.userRepository.delete({ id });

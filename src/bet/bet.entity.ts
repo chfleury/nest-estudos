@@ -1,41 +1,42 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Bet } from 'src/bet/bet.entity';
+import { Game } from 'src/game/game.entity';
+import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Game {
+export class Bet {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
 
-  @Column({ unique: true })
-  type: string;
+  @ManyToOne(() => Game)
+  game: Game;
+
+  @ManyToOne(() => User)
+  user: User;
 
   @Column({})
-  description: string;
+  gameId: number;
 
   @Column({})
-  range: number;
+  userId: number;
+
+  @Column({})
+  selectedNumbers: string;
 
   @Column({ type: 'float' })
-  price: number;
+  totalPrice: number;
 
-  @Column({})
-  maxNumber: number;
-
-  @Column({})
-  color: string;
-
-  @OneToMany(() => Bet, (bet) => bet.gameId)
-  users: Bet[];
+  @Column({ default: false })
+  isDeleted: boolean;
 
   @CreateDateColumn({
     type: 'timestamp',

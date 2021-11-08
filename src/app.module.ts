@@ -6,6 +6,7 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
 import { GameModule } from './game/game.module';
+import { BetModule } from './bet/bet.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GameModule } from './game/game.module';
     UserModule,
     ProfileModule,
     GameModule,
+    BetModule,
   ],
   providers: [AppService],
 })
