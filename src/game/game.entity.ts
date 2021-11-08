@@ -1,32 +1,36 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Profile } from 'src/profile/profile.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class User {
+export class Game {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
 
   @Column({ unique: true })
-  email: string;
+  type: string;
 
   @Column({})
-  password: string;
-
-  @ManyToOne(() => Profile)
-  profile: Profile;
+  description: string;
 
   @Column({})
-  profileId: number;
+  range: number;
+
+  @Column({ type: 'float' })
+  price: number;
+
+  @Column({})
+  maxNumber: number;
+
+  @Column({})
+  color: string;
 
   @CreateDateColumn({
     type: 'timestamp',
