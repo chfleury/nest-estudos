@@ -15,4 +15,11 @@ export class ProfileResolver {
 
     return user;
   }
+
+  @Mutation(() => Boolean)
+  async deleteProfile(@Args('id') id: number): Promise<boolean> {
+    const bool = await this.profileService.deleteProfile(id);
+
+    return bool;
+  }
 }

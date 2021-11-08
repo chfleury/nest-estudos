@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { RelationId } from 'typeorm';
 
 @InputType()
 export class CreateUserInput {
@@ -8,6 +9,11 @@ export class CreateUserInput {
   @IsNotEmpty({ message: 'email field must not be null' })
   @IsEmail()
   email: string;
+
+  @Field()
+  @IsNumber()
+  @IsNotEmpty({ message: 'Profile Id field must not be null' })
+  profileId: number;
 
   @Field()
   @IsString()

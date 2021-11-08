@@ -2,10 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Profile {
+  id: ID!
+  profile: String!
+  users: [User!]!
+}
+
 type User {
   id: ID!
   email: String!
   password: String!
+  profile: Profile!
+  profileId: Float!
 }
 
 type Query {
@@ -17,14 +25,21 @@ type Mutation {
   createUser(data: CreateUserInput!): User!
   updateUser(data: UpdateUserInput!, id: Float!): User!
   deleteUser(id: Float!): Boolean!
+  createProfile(data: CreateProfileInput!): Profile!
+  deleteProfile(id: Float!): Boolean!
 }
 
 input CreateUserInput {
   email: String!
+  profileId: Float!
   password: String!
 }
 
 input UpdateUserInput {
   email: String!
   password: String!
+}
+
+input CreateProfileInput {
+  profile: String!
 }

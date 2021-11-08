@@ -34,8 +34,9 @@ export class UserService {
 
   async createUser(data: CreateUserInput): Promise<User> {
     const user = this.userRepository.create(data);
+    console.log(data);
     const savedUser = await this.userRepository.save(user);
-
+    console.log(user);
     if (!savedUser) {
       throw new InternalServerErrorException('Failed to create user');
     }
