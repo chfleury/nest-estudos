@@ -47,11 +47,10 @@ export class UserService {
   async updateUser(id: number, data: UpdateUserInput): Promise<User> {
     const user = await this.findUserById(id);
 
-    await this.userRepository.update(user, { ...data });
+    user.password = data.password;
+    await this.userRepository.save(user);
 
-    const userUpdated = this.userRepository.create({ ...user, ...data });
-
-    return userUpdated;
+    return user;
   }
 
   async deleteUser(id: number): Promise<boolean> {

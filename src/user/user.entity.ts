@@ -1,7 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Bet } from 'src/bet/bet.entity';
 import { Profile } from 'src/profile/profile.entity';
+import * as bcrypt from 'bcrypt';
+
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -46,9 +50,13 @@ export class User {
   })
   public updatedAt: Date;
 
-  // @AfterInsert()
-  // async createSocketRoom(): Promise<void> {
-  //   const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-  //   this.room =  `${this.id}_${randomString}`
-  // }
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPass(): Promise<void> {
+    const saltOrRounds = 10;
+    const password = this.password;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+
+    this.password = hash;
+  }
 }

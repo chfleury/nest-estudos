@@ -80,7 +80,6 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  email: String!
   password: String!
 }
 
