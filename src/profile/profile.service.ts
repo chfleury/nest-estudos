@@ -49,9 +49,9 @@ export class ProfileService {
       throw new NotFoundException('Profile not found');
     }
 
-    const deletedUser = this.profileRepository.delete(profile);
+    const deletedProfile = await this.profileRepository.delete({ id });
 
-    if (deletedUser) {
+    if (deletedProfile.affected) {
       return true;
     }
 

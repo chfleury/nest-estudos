@@ -5,8 +5,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
-import { GameResolver } from './game/game.resolver';
-import { GameService } from './game/game.service';
 import { GameModule } from './game/game.module';
 
 @Module({

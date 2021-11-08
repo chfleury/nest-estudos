@@ -53,11 +53,15 @@ export class GameService {
   }
 
   async deleteGame(id: number): Promise<boolean> {
-    const game = await this.findGameById(id);
+    const game = await this.gameRepository.findOne(id);
 
-    const deletedGame = this.gameRepository.delete(game);
+    if (!game) {
+      throw new NotFoundException('Game not found');
+    }
 
-    if (deletedGame) {
+    const deletedGame = await this.gameRepository.delete({ id });
+    console.log(deletedGame);
+    if (deletedGame.affected) {
       return true;
     }
 

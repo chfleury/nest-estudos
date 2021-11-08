@@ -55,11 +55,15 @@ export class UserService {
   }
 
   async deleteUser(id: number): Promise<boolean> {
-    const user = await this.findUserById(id);
+    const user = await this.userRepository.findOne(id);
 
-    const deletedUser = this.userRepository.delete(user);
+    if (!user) {
+      throw new NotFoundException('Profile not found');
+    }
 
-    if (deletedUser) {
+    const deletedUser = await this.userRepository.delete({ id });
+
+    if (deletedUser.affected) {
       return true;
     }
 
