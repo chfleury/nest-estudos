@@ -106,7 +106,6 @@ input CreateBetInput {
   selectedNumbers: String!
   gameId: Float!
   userId: Float!
-  totalPrice: Float!
 }
 
 input AuthInputDTO {

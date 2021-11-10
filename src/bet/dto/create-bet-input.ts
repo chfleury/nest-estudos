@@ -17,9 +17,4 @@ export class CreateBetInput {
   @IsNumber()
   @IsNotEmpty({ message: 'userId field must not be null' })
   userId: number;
-
-  @Field()
-  @IsNumber()
-  @IsNotEmpty({ message: 'totalPrice field must not be null' })
-  totalPrice: number;
 }

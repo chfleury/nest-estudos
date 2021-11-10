@@ -1,9 +1,11 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Game } from 'src/game/game.entity';
 import { Repository } from 'typeorm';
 import { Bet } from './bet.entity';
 import { CreateBetInput } from './dto/create-bet-input';
@@ -13,6 +15,8 @@ export class BetService {
   constructor(
     @InjectRepository(Bet)
     private betRepository: Repository<Bet>,
+    @InjectRepository(Game)
+    private gameRepository: Repository<Game>,
   ) {}
 
   async findBetById(id: number): Promise<Bet> {
@@ -32,7 +36,20 @@ export class BetService {
   }
 
   async createBet(data: CreateBetInput): Promise<Bet> {
-    const bet = this.betRepository.create(data);
+    const game = await this.gameRepository.findOne(data.gameId);
+
+    if (data.selectedNumbers.split(',').length !== game.maxNumber) {
+      throw new BadRequestException(
+        'should select ' + game.maxNumber + ' numbers',
+      );
+    }
+
+    const bet = this.betRepository.create({
+      selectedNumbers: data.selectedNumbers,
+      userId: data.userId,
+      gameId: data.gameId,
+      totalPrice: game.price,
+    });
     const savedBet = await this.betRepository.save(bet);
 
     if (!savedBet) {
