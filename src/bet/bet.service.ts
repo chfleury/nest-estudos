@@ -37,8 +37,24 @@ export class BetService {
 
   async createBet(data: CreateBetInput): Promise<Bet> {
     const game = await this.gameRepository.findOne(data.gameId);
+    let selectedNumbersArray;
+    try {
+      selectedNumbersArray = data.selectedNumbers.split(',');
+    } catch (e) {
+      throw new BadRequestException(
+        'should select ' + game.maxNumber + ' numbers',
+      );
+    }
 
-    if (data.selectedNumbers.split(',').length !== game.maxNumber) {
+    selectedNumbersArray.forEach((element) => {
+      if (element <= 0 || element > game.range) {
+        throw new BadRequestException(
+          'selectedNumbers not in range ' + game.range,
+        );
+      }
+    });
+
+    if (selectedNumbersArray.length !== game.maxNumber) {
       throw new BadRequestException(
         'should select ' + game.maxNumber + ' numbers',
       );
