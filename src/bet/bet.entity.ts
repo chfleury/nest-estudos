@@ -17,16 +17,16 @@ export class Bet {
   @Field(() => ID)
   id: number;
 
-  @ManyToOne(() => Game)
+  @ManyToOne(() => Game, { onDelete: 'SET NULL' })
   game: Game;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: 'SET NULL' })
   user: User;
 
-  @Column({})
+  @Column({ nullable: true })
   gameId: number;
 
-  @Column({})
+  @Column({ nullable: true })
   userId: number;
 
   @Column({})
